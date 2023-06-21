@@ -19,8 +19,8 @@ export class AuthDto {
   @IsString()
   last_name:string;
 
-  @IsNumber()
+  @IsString()
   @IsNotEmpty()
   @IsPhoneNumber()
-  phone_number:number;
+  phone_number:string;
 }
