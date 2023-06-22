@@ -22,5 +22,5 @@ export class AuthDto {
   @IsString()
   @IsNotEmpty()
   @IsPhoneNumber()
-  phone_number:string;
+  phone_no:string;
 }
