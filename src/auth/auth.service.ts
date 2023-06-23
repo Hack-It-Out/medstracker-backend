@@ -1,10 +1,14 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { BadRequestException, Body, ForbiddenException, Injectable } from '@nestjs/common';
 import { CreateAuthDto } from './dto/create-auth.dto';
 import { UpdateAuthDto } from './dto/update-auth.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { AuthDto } from './dto/auth.dto';
 import { IsEmail } from 'class-validator';
 import * as brypt from 'bcrypt'
+import {JwtService} from "@nestjs/jwt";
+import {jwtSecret} from "../utils/constants"
+import cookieParser from 'cookie-parser';
+import { Request,Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -28,11 +32,11 @@ export class AuthService {
   //   return `This action removes a #${id} auth`;
   // }
 
-  constructor(private prisma:PrismaService){}
+  constructor(private prisma:PrismaService, private jwt:JwtService){}
   async signup(dto:AuthDto){
     const {email,password,first_name,last_name,phone_no}=dto;
-    const foundUser=await this.prisma.user.findUnique({where:{phone_no}})
 
+    const foundUser=await this.prisma.user.findUnique({where:{phone_no}})
     if(foundUser){
       throw new BadRequestException("This Phone number is already registered")
     }
@@ -46,20 +50,47 @@ export class AuthService {
         last_name,
       }
     })
-
-
     return {message: "signup successful"};
   }
-  async signin(){
-    return {message: "signin successful"};
+
+  async signin(dto:AuthDto,req:Request,res:Response){
+    const{phone_no,password}=dto
+
+    const foundUser=await this.prisma.user.findUnique({where:{phone_no}})
+    if(!foundUser){
+      throw new BadRequestException("Please sign In with the registered phone number")
+    }
+
+    const passMatch=await this.comparePasswords({password,hash:foundUser.password})
+    if (!passMatch) {
+      throw new BadRequestException("Please sign In with the registered phone number")
+    }
+
+    const token=await this.signToken({id:foundUser.id,phone_no:foundUser.phone_no})
+
+    if(!token){
+      throw new ForbiddenException()
+    }
+
+    res.cookie("token",token)
+    return res.send({message:"Sign In Successful"});
   }
+
   async signout(){
     return {message: "signout successful"};
   }
 
   async hashPassword(password:string){
     const saltOrRounds = 10;
-    const hashedPassword = await brypt.hash(password, saltOrRounds);
-    return hashedPassword;
+    return await brypt.hash(password, saltOrRounds);
+  }
+
+  async comparePasswords(args:{password:string,hash:string}){
+    return await brypt.compare(args.password, args.hash);
+  }
+
+  async signToken(args:{id:string,phone_no:string}){
+    const payload= args
+    return this.jwt.signAsync(payload,{secret:jwtSecret})
   }
 }
