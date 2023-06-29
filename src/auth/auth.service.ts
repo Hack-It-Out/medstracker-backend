@@ -31,7 +31,7 @@ export class AuthService {
         first_name,
         last_name,
         email,
-        avator: avatar,
+        avatar: avatar || '',
       },
     });
     return { message: 'signup successful' };
