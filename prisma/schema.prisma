@@ -8,53 +8,58 @@ datasource db {
 }
 
 model User {
-  id         String  @id @default(cuid())
+  id         String      @id @default(cuid())
   email      String
   avatar     String
   first_name String
   last_name  String
-  phone_no   String? @unique
+  phone_no   String?     @unique
   password   String
   otp        OTP[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  medicines  Medicine[]
   @@map("users")
 }
 
 model OTP {
-  id        String   @id @default(uuid())
+  id        String    @id @default(uuid())
   owner     User     @relation(fields: [userId], references: [id])
   userId    String
   code      String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  expiresAt DateTime @db.Timestamp(5)
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+  expiresAt DateTime  @db.Timestamp(5)
   useCase   UseCase
   @@map("otp")
 }
+
 enum UseCase {
   LOGIN
   D2FA
   PHV
 }
 
-model Medicine{
-  id         String   @id @default(cuid())
-  name       String
-  type       String
-  amount     Int
-  pills_per_time     Int
-  duration   Int
-  time       DateTime[]
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Medicine {
+  id             String                                                  @id @default(cuid())
+  name           String
+  type           String
+  amount         Int
+  pills_per_time Int
+  duration       Int
+  time           DateTime[]
+  createdAt      DateTime                                                @default(now())
+  updatedAt      DateTime                                                @updatedAt
+
+  userId         String     
+  owner          User?      @relation(fields: [userId], references: [id]) // Add the relation to User model
   @@map("medicine")
 }
 
-model Caregiver{
-  id         String   @id @default(cuid())
+model Caregiver {
+  id         String    @id @default(cuid())
   first_name String
   last_name  String
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
 }

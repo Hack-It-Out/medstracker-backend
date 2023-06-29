@@ -13,8 +13,8 @@ import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
+  private currentUser: User | null = null;
   constructor(private prisma: PrismaService, private jwt: JwtService) {}
-  
   async signup(dto: AuthDto) {
     const { password, first_name, last_name, phone_no, email, avatar } = dto;
 
@@ -73,8 +73,14 @@ export class AuthService {
       throw new ForbiddenException();
     }
 
+    this.currentUser = foundUser; // Assign the found user object to the currentUser property
+
     res.setHeader('Authorization', `Bearer ${token}`);
     return res.send({ message: 'Sign In Successful', token });
+  }
+
+  getCurrentUser(): User | null {
+    return this.currentUser;
   }
 
   async signout(req: Request, res: Response) {

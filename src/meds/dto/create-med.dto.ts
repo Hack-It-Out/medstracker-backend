@@ -1,4 +1,11 @@
-import { IsNotEmpty, IsString, IsInt, IsArray, ArrayNotEmpty, IsDateString } from 'class-validator';
+import {
+  IsNotEmpty,
+  IsString,
+  IsInt,
+  IsArray,
+  ArrayNotEmpty,
+} from 'class-validator';
+import { IsTime } from 'src/utils/validator';
 
 export class CreateMedDto {
   @IsNotEmpty()
@@ -15,7 +22,7 @@ export class CreateMedDto {
 
   @IsNotEmpty()
   @IsInt()
-  pills_per_time:number;
+  pills_per_time: number;
 
   @IsNotEmpty()
   @IsInt()
@@ -24,6 +31,8 @@ export class CreateMedDto {
   @IsNotEmpty()
   @IsArray()
   @ArrayNotEmpty()
-  @IsDateString()
-  time: Date[];
+  @IsTime({ each: true }) // Apply the IsTime decorator to each time value in the array
+  time: string[];
+
+  owner: string;
 }
