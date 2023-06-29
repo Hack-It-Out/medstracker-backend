@@ -14,7 +14,7 @@ import { Request, Response } from 'express';
 export class AuthService {
   constructor(private prisma: PrismaService, private jwt: JwtService) {}
   async signup(dto: AuthDto) {
-    const { password, first_name, last_name, phone_no } = dto;
+    const { password, first_name, last_name, phone_no, email, avatar } = dto;
 
     const foundUser = await this.prisma.user.findUnique({
       where: { phone_no },
@@ -30,6 +30,8 @@ export class AuthService {
         password: hashedPassword, //check this just in case passwords become a problem
         first_name,
         last_name,
+        email,
+        avator: avatar,
       },
     });
     return { message: 'signup successful' };

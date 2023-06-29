@@ -6,12 +6,17 @@ import { PrismaModule } from '../prisma/prisma.module';
 import { PrismaService } from 'prisma/prisma.service';
 import { UsersModule } from './users/users.module';
 import { AfricastalkingModule } from './africastalking/africastalking.module';
-import { MedsResolver } from './meds/meds.resolver';
 import { MedsModule } from './meds/meds.module';
 
 @Module({
-  imports: [AuthModule,PrismaModule, UsersModule, AfricastalkingModule, MedsModule],
+  imports: [
+    AuthModule,
+    PrismaModule,
+    UsersModule,
+    AfricastalkingModule,
+    MedsModule,
+  ],
   controllers: [AppController],
-  providers: [AppService, MedsResolver],
+  providers: [AppService],
 })
 export class AppModule {}

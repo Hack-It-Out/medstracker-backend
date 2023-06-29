@@ -23,6 +23,9 @@ export class AuthDto {
   @IsNotEmpty()
   @IsPhoneNumber()
   phone_no: string;
+
+  email?: string;
+  avatar?: string;
 }
 
 export class SignInDto {
