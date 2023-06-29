@@ -1,12 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller } from '@nestjs/common';
 import { MedsService } from './meds.service';
-import { CreateMedDto } from './dto/create-med.dto';
-import { UpdateMedDto } from './dto/update-med.dto';
 
 @Controller('meds')
 export class MedsController {
   constructor(private readonly medsService: MedsService) {}
-
   @Post("createMedicine")
   createMedicine(@Body() dto: CreateMedDto) {
     return this.medsService.createMedicine(dto);
@@ -16,4 +13,5 @@ export class MedsController {
   findMedicine(@Param('id') id: string) {
     //return this.medsService.findOne(+id);
   }
+
 }
