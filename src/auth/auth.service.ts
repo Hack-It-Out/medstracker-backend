@@ -1,18 +1,13 @@
 import {
   BadRequestException,
-  Body,
   ForbiddenException,
   Injectable,
 } from '@nestjs/common';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
 import { PrismaService } from 'prisma/prisma.service';
 import { AuthDto, SignInDto } from './dto/auth.dto';
-import { IsEmail } from 'class-validator';
 import * as brypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from '../utils/constants';
-import cookieParser from 'cookie-parser';
 import { Request, Response } from 'express';
 
 @Injectable()
