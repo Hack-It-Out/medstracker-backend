@@ -1,10 +1,10 @@
 import { IsEmail, IsNotEmpty, IsNumber, IsPhoneNumber, IsString, Length, isNumber, isString } from 'class-validator';
 
 export class AuthDto {
-  @IsEmail()
-  @IsNotEmpty()
-  @IsString()
-  email: string;
+  // @IsEmail()
+  // @IsNotEmpty()
+  // @IsString()
+  // email: string;
 
   @IsNotEmpty()
   @IsString()
