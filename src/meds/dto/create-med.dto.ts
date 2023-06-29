@@ -15,11 +15,15 @@ export class CreateMedDto {
 
   @IsNotEmpty()
   @IsInt()
+  pills_per_time:number;
+
+  @IsNotEmpty()
+  @IsInt()
   duration: number;
 
   @IsNotEmpty()
   @IsArray()
   @ArrayNotEmpty()
   @IsDateString()
-  time: string[];
+  time: Date[];
 }

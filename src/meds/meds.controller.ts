@@ -7,9 +7,9 @@ import { UpdateMedDto } from './dto/update-med.dto';
 export class MedsController {
   constructor(private readonly medsService: MedsService) {}
 
-  @Post()
-  createMedicine(@Body() createMedDto: CreateMedDto) {
-    //return this.medsService.create(createMedDto);
+  @Post("createMedicine")
+  createMedicine(@Body() dto: CreateMedDto) {
+    return this.medsService.createMedicine(dto);
   }
 
   @Get(':id')

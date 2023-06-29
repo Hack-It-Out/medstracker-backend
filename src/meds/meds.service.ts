@@ -6,17 +6,11 @@ import { CreateMedDto } from './dto/create-med.dto';
 export class MedsService {
   constructor(private prisma: PrismaService) {}
 
-  async create(dto: CreateMedDto){
-    const { name, type, amount, duration, time } = dto;
+  async createMedicine(dto: CreateMedDto){
+    const { name, type, amount,pills_per_time, duration, time } = dto;
     const medicine = await this.prisma.medicine.create({
-      data: {
-        name,
-        type,
-        amount,
-        duration,
-        time,
-      },
+      data: {name,type,amount,pills_per_time,duration,time},
     });
-    return medicine;
+    return {message:"Message has been added successfuly",medicine};
   }
 }

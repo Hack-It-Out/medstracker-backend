@@ -43,6 +43,7 @@ model Medicine{
   name       String
   type       String
   amount     Int
+  pills_per_time     Int
   duration   Int
   time       DateTime[]
   createdAt DateTime @default(now())
