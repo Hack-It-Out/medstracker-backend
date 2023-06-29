@@ -9,6 +9,7 @@ import * as brypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from '../utils/constants';
 import { Request, Response } from 'express';
+import { Prisma } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -24,16 +25,19 @@ export class AuthService {
     }
 
     const hashedPassword = await this.hashPassword(password);
+    const userData: Prisma.UserCreateInput = {
+      phone_no,
+      password: hashedPassword,
+      first_name,
+      last_name,
+      email: email || '', // Set default value if not provided
+      avatar: avatar || '',
+    };
+
     await this.prisma.user.create({
-      data: {
-        phone_no,
-        password: hashedPassword, //check this just in case passwords become a problem
-        first_name,
-        last_name,
-        email,
-        avatar: avatar || '',
-      },
+      data: userData,
     });
+
     return { message: 'signup successful' };
   }
 
