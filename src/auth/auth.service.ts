@@ -14,6 +14,7 @@ import { Prisma, User } from '@prisma/client';
 @Injectable()
 export class AuthService {
   constructor(private prisma: PrismaService, private jwt: JwtService) {}
+  
   async signup(dto: AuthDto) {
     const { password, first_name, last_name, phone_no, email, avatar } = dto;
 
