@@ -72,7 +72,7 @@ export class AuthService {
     }
 
     res.cookie('token', token);
-    return res.send({ message: 'Sign In Successful' });
+    return res.send({ message: 'Sign In Successful', token });
   }
 
   async signout(req: Request, res: Response) {
