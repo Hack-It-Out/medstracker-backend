@@ -8,27 +8,12 @@ export class MedsController {
   constructor(private readonly medsService: MedsService) {}
 
   @Post()
-  create(@Body() createMedDto: CreateMedDto) {
-    return this.medsService.create(createMedDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.medsService.findAll();
+  createMedicine(@Body() createMedDto: CreateMedDto) {
+    //return this.medsService.create(createMedDto);
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.medsService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateMedDto: UpdateMedDto) {
-    return this.medsService.update(+id, updateMedDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.medsService.remove(+id);
+  findMedicine(@Param('id') id: string) {
+    //return this.medsService.findOne(+id);
   }
 }
