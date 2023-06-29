@@ -7,7 +7,11 @@ export class RemindersController {
 
   @Post('send')
   async sendReminders() {
-    await this.reminderService.sendReminders();
-    return { message: 'Reminders sent successfully' };
+    try {
+      await this.reminderService.sendReminders();
+      return { message: 'Reminders sent successfully' };
+    } catch (error) {
+      return { message: 'Failed to send reminders' };
+    }
   }
 }
