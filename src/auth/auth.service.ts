@@ -34,7 +34,7 @@ export class AuthService {
 
   constructor(private prisma:PrismaService, private jwt:JwtService){}
   async signup(dto:AuthDto){
-    const {email,password,first_name,last_name,phone_no}=dto;
+    const {password,first_name,last_name,phone_no}=dto;
 
     const foundUser=await this.prisma.user.findUnique({where:{phone_no}})
     if(foundUser){
