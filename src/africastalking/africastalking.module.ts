@@ -3,6 +3,6 @@ import { AfricastalkingService } from './africastalking.service';
 
 @Module({
   providers: [AfricastalkingService],
-  exports: [AfricastalkingService]
+  exports: [AfricastalkingService],
 })
 export class AfricastalkingModule {}
