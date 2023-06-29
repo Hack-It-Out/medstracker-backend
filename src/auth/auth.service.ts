@@ -9,7 +9,7 @@ import * as brypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { jwtSecret } from '../utils/constants';
 import { Request, Response } from 'express';
-import { Prisma } from '@prisma/client';
+import { Prisma, User } from '@prisma/client';
 
 @Injectable()
 export class AuthService {
@@ -72,7 +72,7 @@ export class AuthService {
       throw new ForbiddenException();
     }
 
-    res.cookie('token', token);
+    res.setHeader('Authorization', `Bearer ${token}`);
     return res.send({ message: 'Sign In Successful', token });
   }
 
@@ -93,5 +93,17 @@ export class AuthService {
   async signToken(args: { id: string; phone_no: string }) {
     const payload = args;
     return this.jwt.signAsync(payload, { secret: jwtSecret });
+  }
+
+  async getUserFromToken(token: string): Promise<User | null> {
+    try {
+      const decoded = await this.jwt.verifyAsync(token, { secret: jwtSecret });
+      const user = await this.prisma.user.findUnique({
+        where: { id: decoded.id },
+      });
+      return user;
+    } catch (error) {
+      return null; // Token verification failed or user not found
+    }
   }
 }
