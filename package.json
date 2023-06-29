@@ -28,7 +28,7 @@
     "@nestjs/platform-express": "^9.4.3",
     "@nestjs/schedule": "^3.0.1",
     "@prisma/client": "4.16.1",
-    "africastalking": "^0.6.2",
+    "africastalking": "^0.5.5",
     "amqp-connection-manager": "^4.1.13",
     "amqplib": "^0.10.3",
     "bcrypt": "^5.1.0",

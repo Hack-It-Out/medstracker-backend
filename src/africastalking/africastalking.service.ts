@@ -6,10 +6,10 @@ import { inspect } from 'util';
 export class AfricastalkingService {
   private AfricaIsTalkingClient;
   constructor() {
-    // this.AfricaIsTalkingClient = AfricaIsTalking({
-    //   apiKey: process.env.AIT_API_KEY ?? '',
-    //   username: process.env.AIT_USERNAME ?? '',
-    // });
+    this.AfricaIsTalkingClient = AfricaIsTalking({
+      apiKey: process.env.AIT_API_KEY ?? '',
+      username: process.env.AIT_USERNAME ?? '',
+    });
   }
 
   public async sendSMS(props: { to: string[]; message: string }) {
