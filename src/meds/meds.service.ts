@@ -5,6 +5,5 @@ import { PrismaService } from 'prisma/prisma.service';
 
 @Injectable()
 export class MedsService {
-  constructor(private Prisma:PrismaService){}
-  
+  constructor(private Prisma: PrismaService) {}
 }
