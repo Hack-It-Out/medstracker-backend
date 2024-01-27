@@ -10,6 +10,6 @@ async function bootstrap() {
   app.use(cookieParser())
 
   //require("dotenv").config();
-  await app.listen(3333);
+  await app.listen(3000);
 }
 bootstrap();
